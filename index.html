@@ -1338,6 +1338,7 @@
       <h3>Portfolio Assistant</h3>
       <div style="display:flex;gap:8px;align-items:center;">
         <button class="chat-quick-toggle" id="chatQuickToggle" aria-label="Show suggested questions" style="display:none;" title="Suggested questions">↻</button>
+        <button class="chat-clear-btn" id="chatClear" aria-label="Clear chat history" title="Clear chat">🗑️</button>
         <button id="chatClose" aria-label="Close chat">×</button>
       </div>
     </div>
@@ -1507,6 +1508,21 @@
       });
       quickToggle.addEventListener('click', () => {
         quickRow.classList.toggle('hidden');
+      });
+
+      // Clear chat
+      const clearBtn = document.getElementById('chatClear');
+      clearBtn.addEventListener('click', () => {
+        if (!confirm('Clear chat history?')) return;
+        try { sessionStorage.removeItem('portfolio-chat-history'); } catch {}
+        log.innerHTML = '';
+        history = [];
+        lastUserMsg = '';
+        hasUserMsg = false;
+        quickRow.classList.remove('hidden');
+        quickToggle.style.display = 'none';
+        // Optional: add a welcome back message
+        log.appendChild(renderMsg('bot', "Chat cleared. How can I help you?"));
       });
 
       // Form submit
