@@ -1368,12 +1368,12 @@
 
       const KB = [
         {id:'greeting', keywords:['hi','hello','hey','yo','good morning','good evening'], answer:"Hi! I'm Abhishek's portfolio assistant. Ask me about his skills, projects, experience, or how to get in touch."},
-        {id:'about', keywords:['who','about','yourself','background','introduction','bio','tell me'], answer:"Abhishek P R is a Cloud & DevOps Engineer based in Kerala, India. He works with AWS, Terraform, Docker, Kubernetes, and CI/CD to build reproducible infrastructure and push-to-deploy pipelines. Currently open to Cloud & DevOps Engineer roles."},
+        {id:'about', keywords:['who','about','yourself','background','bio'], answer:"Abhishek P R is a Cloud & DevOps Engineer based in Kerala, India. He works with AWS, Terraform, Docker, Kubernetes, and CI/CD to build reproducible infrastructure and push-to-deploy pipelines. Currently open to Cloud & DevOps Engineer roles."},
         {id:'skills', keywords:['skills','tech stack','technologies','tools','what can you do','expertise'], answer:"Abhishek's core skills: Cloud & AWS (EC2, S3, VPC, IAM, Route 53, RDS, CloudWatch), Infrastructure as Code (Terraform with remote state and locking), Containers (Docker, Kubernetes), CI/CD (GitHub Actions, SonarCloud), Scripting (Bash, Python, Linux), Version Control (Git, GitHub), and Web & Networking (Nginx, Cloudflare DNS, HTTP/HTTPS, SSH). He also has endorsements on AWS, Docker, Kubernetes, GitHub, Linux, CI/CD, Nginx, and Cloudflare."},
         {id:'projects', keywords:['projects','work','repos','github','portfolio','built','showcase'], answer:"Three main projects: (1) terraform-aws-production-lab — production-style AWS infrastructure as code, (2) calculator-cicd-sonarqube — CI/CD pipeline with SonarQube quality gates, (3) docker-multi-app — multi-container Docker app with custom networking. All links are in the Projects section of the page."},
-        {id:'experience', keywords:['experience','work history','internship','worked','job','employment','career'], answer:"Abhishek's experience includes Cloud Infrastructure Intern roles focused on AWS, Terraform, Docker, and CI/CD. See the Experience section for details."},
+        {id:'experience', keywords:['experience','work history','internship','worked','job','employment','career','tell me about your experience','your experience'], answer:"Abhishek's experience includes Cloud Infrastructure Intern roles focused on AWS, Terraform, Docker, and CI/CD. See the Experience section for details."},
         {id:'education', keywords:['education','college','university','degree','study','studied','jcet','ottapalam'], answer:"Abhishek studied at Jawaharlal College of Engineering and Technology (JCET), Ottapalam."},
-        {id:'certifications', keywords:['certification','cert','certified','aws certified','terraform certified','kubernetes certified'], answer:"No certifications are listed on the page yet. For current progress, reach out via the Contact section."},
+        {id:'certifications', keywords:['certification','certifications','cert','certs','certified','aws certified','terraform certified','kubernetes certified'], answer:"No certifications are listed on the page yet. For current progress, reach out via the Contact section."},
         {id:'contact', keywords:['contact','email','reach','hire','talk','linkedin','get in touch','message'], answer:"Email: prabhishek71@gmail.com. LinkedIn and GitHub links are in the Contact section. He typically responds within a day."},
         {id:'resume', keywords:['resume','cv','download','pdf'], answer:"You can download Abhishek's resume using the 'Download Resume' button in the hero section — direct link: /Abhishek-PR-Resume.pdf"},
         {id:'availability', keywords:['available','hiring','open to work','looking for','freelance','opportunities'], answer:"Abhishek is open to Cloud & DevOps Engineer roles. Reach out via the Contact section or email prabhishek71@gmail.com."},
@@ -1390,6 +1390,15 @@
         const tokens = text.split(/\s+/).filter(Boolean);
         const firstToken = tokens[0] || '';
 
+        // Helper: check if token matches keyword with singular/plural normalization
+        function tokenMatches(token, kw) {
+          if (token === kw) return true;
+          if (token === kw + 's') return true;
+          if (kw === token + 's') return true;
+          if (token.startsWith(kw) || kw.startsWith(token)) return true;
+          return false;
+        }
+
         let best = {score: 0, intent: null, firstMatch: false};
         for (const item of KB) {
           let score = 0;
@@ -1399,9 +1408,12 @@
             if (kwLower.includes(' ')) {
               if (text.includes(kwLower)) score += kwLower.length;
             } else {
-              if (tokens.includes(kwLower)) {
-                score += kwLower.length;
-                if (kwLower === firstToken) firstMatch = true;
+              for (const token of tokens) {
+                if (tokenMatches(token, kwLower)) {
+                  score += kwLower.length;
+                  if (token === firstToken) firstMatch = true;
+                  break;
+                }
               }
             }
           }
