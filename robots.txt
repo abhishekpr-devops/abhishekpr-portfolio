@@ -1,0 +1,5 @@
+# robots.txt for Abhishek P R Portfolio
+User-agent: *
+Allow: /
+
+Sitemap: https://abhishekpr-portfolio.vercel.app/sitemap.xml
