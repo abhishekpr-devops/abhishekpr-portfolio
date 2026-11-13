@@ -140,7 +140,7 @@
     .nav__list a::after {
       content: ''; position: absolute; left: 0; bottom: -4px; width: 100%; height: 2px;
       background: var(--accent); transform: scaleX(0); transform-origin: right;
-      transition: transform 200ms var(--ease-out);
+      transition: transform 180ms var(--ease-out);
     }
     .nav__list a:hover { color: var(--text); }
     .nav__list a:hover::after { transform: scaleX(1); transform-origin: left; }
@@ -177,12 +177,13 @@
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
       .aurora__blob { animation: none !important; }
-      .btn, .skill-card, .project, .repo-card, .contact-card, .learning-item, .facts { transition: none !important; }
+      .btn, .skill-card, .project, .repo-card, .contact-card, .facts { transition: none !important; }
       .scroll-progress { animation: none !important; }
       .pipeline__dot { animation: none !important; }
       .dot { animation: none !important; }
       .visual-stack { transition: none !important; }
       .nav__list { transition: none !important; }
+      .section-spotlight { transition: none !important; }
     }
 
     /* ===== Buttons ===== */
@@ -218,12 +219,12 @@
     .socials a svg { width: 18px; height: 18px; }
 
     /* ===== Progress Bar ===== */
-    .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; z-index: 200; background: linear-gradient(90deg, var(--accent), var(--success)); background-size: 200% 100%; transform-origin: 0 50%; transform: scaleX(0); animation: grad-shift 4s linear infinite; }
+    .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; z-index: 200; background: linear-gradient(90deg, var(--accent), var(--success)); background-size: 200% 100%; transform-origin: 0 50%; transform: scaleX(0); animation: grad-shift 4s linear infinite; transition: height 300ms var(--ease-out); }
     @keyframes grad-shift { to { background-position: 200% 0; } }
 
     /* ===== HERO ===== */
     .hero { padding: 100px 0 60px; position: relative; }
-    .hero__inner { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .hero__inner { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; }
     .hero__content { display: flex; flex-direction: column; gap: 1rem; }
     .hero__content > * { opacity: 0; transform: translateY(12px); animation: hero-rise 600ms var(--ease-out) forwards; }
     .hero__content > *:nth-child(1) { animation-delay: 0ms; }
@@ -232,7 +233,6 @@
     .hero__content > *:nth-child(4) { animation-delay: 240ms; }
     .hero__content > *:nth-child(5) { animation-delay: 320ms; }
     .hero__content > *:nth-child(6) { animation-delay: 400ms; }
-    .hero__content > *:nth-child(7) { animation-delay: 480ms; }
     @keyframes hero-rise { to { opacity: 1; transform: translateY(0); } }
     @media (prefers-reduced-motion: reduce) {
       .hero__content > * { opacity: 1; transform: none; animation: none; }
@@ -247,32 +247,6 @@
     .hero__lead { font-size: 1.05rem; color: var(--text-muted); max-width: 500px; margin-bottom: 2rem; line-height: 1.7; }
     .hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
     .hero__socials { display: flex; gap: 1.5rem; margin-top: 1rem; }
-
-    /* Hero Profile Photo */
-    .hero__photo { position: relative; display: flex; justify-content: center; align-items: flex-start; }
-    .hero__photo-ring {
-      position: relative; width: 220px; height: 220px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, var(--accent-glow) 0%, transparent 60%);
-      box-shadow: 0 0 40px var(--accent-glow), inset 0 0 0 2px var(--accent);
-      overflow: hidden;
-    }
-    .hero__photo-ring::before {
-      content: ''; position: absolute; inset: -4px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--success));
-      opacity: 0.3; filter: blur(8px); z-index: -1;
-    }
-    .hero__photo-img {
-      width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
-      display: block;
-    }
-    .hero__badge {
-      position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
-      background: var(--success); color: #000; font-size: 0.7rem; font-weight: 600;
-      font-family: var(--font-mono); padding: 4px 12px; border-radius: 999px;
-      white-space: nowrap; box-shadow: 0 4px 16px rgba(16,185,129,0.3);
-      animation: badge-pop 400ms var(--ease-spring) 800ms both;
-    }
-    @keyframes badge-pop { from { opacity: 0; transform: translateX(-50%) translateY(8px) scale(0.9); } to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); } }
 
     /* Hero Visual: Pipeline Diagram */
     .hero__visual { display: flex; justify-content: center; }
@@ -378,31 +352,6 @@
     .project__links a { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); transition: color 0.2s; }
     .project__links a:hover { color: var(--accent); }
 
-    /* ===== LEARNING & CERTIFICATIONS ===== */
-    .learning-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-    .learning-column { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem; }
-    .learning-column__title { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text); }
-    .learning-column__title--completed { color: var(--success); }
-    .learning-column__title--ongoing { color: var(--amber); }
-    .learning-column__title svg { width: 18px; height: 18px; flex-shrink: 0; }
-    .learning-list { display: flex; flex-direction: column; gap: 0.75rem; }
-    .learning-item {
-      display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem;
-      background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-      transition: border-color 220ms var(--ease-out), transform 220ms var(--ease-out);
-    }
-    .learning-item:hover { border-color: var(--border-hover); transform: translateX(4px); }
-    .learning-item__icon { width: 24px; height: 24px; border-radius: 6px; display: grid; place-items: center; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; flex-shrink: 0; }
-    .learning-item__icon--completed { background: var(--success-dim); color: var(--success); }
-    .learning-item__icon--ongoing { background: var(--amber-dim); color: var(--amber); }
-    .learning-item__content { flex: 1; min-width: 0; }
-    .learning-item__name { font-weight: 500; font-size: 0.9rem; color: var(--text); margin-bottom: 0.15rem; }
-    .learning-item__meta { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); }
-    .learning-placeholder { text-align: center; padding: 2rem 1rem; color: var(--text-dim); font-size: 0.85rem; border: 1px dashed var(--border); border-radius: 8px; background: var(--bg); }
-    .learning-placeholder strong { color: var(--text-muted); }
-    .learning-note { margin-top: 1.5rem; padding: 1rem; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85rem; color: var(--text-muted); }
-    .learning-note strong { color: var(--text); }
-
     /* ===== GITHUB ACTIVITY ===== */
     .github-section { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; }
     .github-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
@@ -464,9 +413,7 @@
       .hero__eyebrow { justify-content: center; }
       .hero__lead { margin-left: auto; margin-right: auto; }
       .hero__actions, .hero__socials { justify-content: center; }
-      .hero__photo-ring { width: 160px; height: 160px; margin: 0 auto 1.5rem; }
       .about__grid { grid-template-columns: 1fr; gap: 30px; }
-      .learning-grid { grid-template-columns: 1fr; }
       .github-header { flex-direction: column; align-items: flex-start; }
       .nav__list {
         display: none; position: absolute; top: 64px; left: 0; right: 0;
@@ -493,7 +440,7 @@
 
     /* ===== HOVER SPOTLIGHT (pointer-fine only) ===== */
     @media (hover: hover) and (pointer: fine) {
-      .skill-card, .project, .repo-card {
+      .skill-card, .project, .repo-card, .section-spotlight {
         --mx: 50%; --my: 50%;
       }
     }
@@ -503,7 +450,7 @@
       .aurora__blob { animation: none !important; }
       .btn::before { display: none; }
       .btn:hover, .btn:active { transform: none !important; }
-      .skill-card:hover, .project:hover, .repo-card:hover, .contact-card:hover, .learning-item:hover { transform: none !important; box-shadow: none !important; border-color: var(--border) !important; }
+      .skill-card:hover, .project:hover, .repo-card:hover, .contact-card:hover { transform: none !important; box-shadow: none !important; border-color: var(--border) !important; }
       .skill-card::before, .project::before, .repo-card::before { display: none !important; }
       .scroll-progress { animation: none !important; }
       .pipeline__dot { animation: none !important; }
@@ -511,8 +458,8 @@
       .visual-stack { transition: none !important; }
       .nav__list { transition: none !important; }
       .hero__content > * { opacity: 1 !important; transform: none !important; animation: none !important; }
-      .hero__badge { animation: none !important; opacity: 1; }
       .nav__list a::after { transition: none !important; }
+      .section-spotlight::before { display: none !important; }
     }
   </style>
 </head>
@@ -543,7 +490,6 @@
           <li><a href="#skills">Skills</a></li>
           <li><a href="#experience">Experience</a></li>
           <li><a href="#projects">Projects</a></li>
-          <li><a href="#learning">Learning</a></li>
           <li><a href="#github">GitHub</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -553,7 +499,7 @@
 
   <main id="main">
     <!-- ===== HERO ===== -->
-    <section class="hero" id="home">
+    <section class="hero section-spotlight" id="home">
       <div class="container hero__inner">
         <div class="hero__content">
           <p class="hero__eyebrow"><span class="dot"></span> Open to Junior DevOps & Cloud Engineer roles</p>
@@ -575,12 +521,6 @@
         </div>
 
         <div class="hero__visual">
-          <div class="hero__photo">
-            <div class="hero__photo-ring">
-              <img class="hero__photo-img" src="/abhishek-profile.jpg" alt="Abhishek P R" width="600" height="600" loading="eager" />
-            </div>
-            <span class="hero__badge">Available for work</span>
-          </div>
           <div class="visual-stack">
             <div class="pipeline-card">
               <div class="pipeline">
@@ -809,67 +749,11 @@
       </div>
     </section>
 
-    <!-- ===== LEARNING & CERTIFICATIONS ===== -->
-    <section class="section" id="learning">
-      <div class="container">
-        <div class="section__head reveal" data-reveal="up">
-          <p class="section__eyebrow"><span>05</span> Learning & Certifications</p>
-          <h2 class="section__title">Continuous learning</h2>
-          <p class="section__lead">AWS cloud foundations, infrastructure automation, and hands-on DevOps practice.</p>
-        </div>
-        <div class="learning-grid">
-          <div class="learning-column reveal" data-reveal="up">
-            <h3 class="learning-column__title learning-column__title--completed">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Completed Certifications
-            </h3>
-            <ul class="learning-list" id="completedCerts">
-              <li class="learning-placeholder">
-                No certifications completed yet — currently working toward the items below.
-              </li>
-            </ul>
-          </div>
-          <div class="learning-column reveal" data-reveal="up">
-            <h3 class="learning-column__title learning-column__title--ongoing">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
-              In Progress
-            </h3>
-            <ul class="learning-list" id="inProgressCerts">
-              <li class="learning-item reveal stagger" data-reveal="left" style="--stagger-index: 0;">
-                <span class="learning-item__icon learning-item__icon--ongoing">AWS</span>
-                <div class="learning-item__content">
-                  <div class="learning-item__name">AWS Cloud Practitioner (CLF-C02)</div>
-                  <div class="learning-item__meta">Studying core services, pricing, security — targeting 2026</div>
-                </div>
-              </li>
-              <li class="learning-item reveal stagger" data-reveal="left" style="--stagger-index: 1;">
-                <span class="learning-item__icon learning-item__icon--ongoing">TF</span>
-                <div class="learning-item__content">
-                  <div class="learning-item__name">HashiCorp Terraform Associate (003)</div>
-                  <div class="learning-item__meta">Practicing with production lab modules and remote state</div>
-                </div>
-              </li>
-              <li class="learning-item reveal stagger" data-reveal="left" style="--stagger-index: 2;">
-                <span class="learning-item__icon learning-item__icon--ongoing">K8s</span>
-                <div class="learning-item__content">
-                  <div class="learning-item__name">Kubernetes Fundamentals</div>
-                  <div class="learning-item__meta">Learning pods, services, ingress, and Helm via labs</div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="learning-note reveal" data-reveal="fade">
-          <strong>Note:</strong> Only certifications actually earned are listed in "Completed." This section is ready for you to add your credentials as you earn them.
-        </div>
-      </div>
-    </section>
-
     <!-- ===== GITHUB ACTIVITY ===== -->
     <section class="section" id="github">
       <div class="container">
         <div class="section__head reveal" data-reveal="up">
-          <p class="section__eyebrow"><span>06</span> GitHub Activity</p>
+          <p class="section__eyebrow"><span>05</span> GitHub Activity</p>
           <h2 class="section__title">Engineering activity</h2>
           <p class="section__lead">Public repositories and open-source work. Contribution statistics are not manufactured here.</p>
         </div>
@@ -925,7 +809,7 @@
     <section class="section" id="contact">
       <div class="container">
         <div class="section__head reveal" data-reveal="up">
-          <p class="section__eyebrow"><span>07</span> Contact</p>
+          <p class="section__eyebrow"><span>06</span> Contact</p>
           <h2 class="section__title">Let's connect</h2>
           <p class="section__lead">Open to Junior DevOps & Cloud Engineer roles. Available for immediate start.</p>
         </div>
@@ -1035,9 +919,165 @@
       }, { rootMargin: '-40% 0px -60% 0px' });
       sections.forEach((s) => navObserver.observe(s));
 
-      // Card hover spotlight (pointer-fine only)
+      // ---- New cursor/movement interactions (pointer-fine only, respects reduced-motion) ----
       const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
       if (finePointer && !reduceMotion) {
+
+        // a) Section background spotlight
+        const spotlightSections = document.querySelectorAll('.section-spotlight, .hero');
+        spotlightSections.forEach((section) => {
+          let ticking = false;
+          section.addEventListener('pointermove', (e) => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+              const r = section.getBoundingClientRect();
+              section.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
+              section.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
+              ticking = false;
+            });
+          });
+          section.addEventListener('pointerleave', () => {
+            section.style.removeProperty('--mx');
+            section.style.removeProperty('--my');
+          });
+        });
+
+        // b) Link directional underline (nav + inline links in content)
+        const linkElements = document.querySelectorAll('.nav__list a, .section__lead a, .project__links a, .repo-card__link, .github-note a, .about__text a');
+        linkElements.forEach((link) => {
+          const underline = document.createElement('span');
+          underline.className = 'link-underline';
+          underline.style.cssText = 'position:absolute;left:0;bottom:-2px;width:100%;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform 180ms var(--ease-out);pointer-events:none;';
+          link.style.position = 'relative';
+          link.appendChild(underline);
+          link.addEventListener('mouseenter', () => {
+            underline.style.transformOrigin = 'left';
+            underline.style.transform = 'scaleX(1)';
+          });
+          link.addEventListener('mouseleave', () => {
+            underline.style.transformOrigin = 'right';
+            underline.style.transform = 'scaleX(0)';
+          });
+        });
+
+        // c) Button magnetic pull (primary CTAs)
+        const magneticButtons = document.querySelectorAll('.btn--primary');
+        magneticButtons.forEach((btn) => {
+          let ticking = false;
+          btn.addEventListener('pointermove', (e) => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+              const r = btn.getBoundingClientRect();
+              const centerX = r.left + r.width / 2;
+              const centerY = r.top + r.height / 2;
+              const dx = (e.clientX - centerX) * 0.08;
+              const dy = (e.clientY - centerY) * 0.08;
+              const cappedX = Math.max(-4, Math.min(4, dx));
+              const cappedY = Math.max(-4, Math.min(4, dy));
+              btn.style.transform = `translate3d(${cappedX}px, ${cappedY}px, 0)`;
+              ticking = false;
+            });
+          });
+          btn.addEventListener('pointerleave', () => {
+            btn.style.transition = 'transform 200ms var(--ease-out)';
+            btn.style.transform = 'translate3d(0, 0, 0)';
+          });
+        });
+
+        // d) Pipeline diagram cursor tilt
+        const visualStack = document.querySelector('.visual-stack');
+        if (visualStack) {
+          let ticking = false;
+          visualStack.addEventListener('pointermove', (e) => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+              const r = visualStack.getBoundingClientRect();
+              const centerX = r.left + r.width / 2;
+              const centerY = r.top + r.height / 2;
+              const dx = e.clientX - centerX;
+              const dy = e.clientY - centerY;
+              const rotateY = (dx / (r.width / 2)) * 3;
+              const rotateX = -(dy / (r.height / 2)) * 3;
+              visualStack.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+              ticking = false;
+            });
+          });
+          visualStack.addEventListener('pointerleave', () => {
+            visualStack.style.transition = 'transform 400ms var(--ease-out)';
+            visualStack.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
+          });
+        }
+
+        // e) Scroll velocity-linked accent on progress bar
+        const progress = document.querySelector('.scroll-progress');
+        if (progress) {
+          let lastScrollY = window.scrollY;
+          let lastTime = performance.now();
+          let velocity = 0;
+          let rafId = null;
+          const updateProgress = () => {
+            const h = document.documentElement;
+            const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+            progress.style.transform = `scaleX(${scrolled})`;
+          };
+          const handleScroll = () => {
+            const now = performance.now();
+            const scrollY = window.scrollY;
+            const dt = now - lastTime;
+            if (dt > 0) {
+              velocity = Math.abs(scrollY - lastScrollY) / dt;
+            }
+            lastScrollY = scrollY;
+            lastTime = now;
+            progress.style.height = `${Math.min(3, 2 + velocity * 150)}px`;
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+              progress.style.transition = 'height 300ms var(--ease-out)';
+              progress.style.height = '3px';
+            });
+            updateProgress();
+          };
+          addEventListener('scroll', handleScroll, { passive: true });
+          updateProgress();
+        }
+
+        // Card hover spotlight (existing, moved here for unified rAF)
+        const spotlightCards = document.querySelectorAll('.skill-card, .project, .repo-card');
+        spotlightCards.forEach((card) => {
+          let ticking = false;
+          card.addEventListener('pointermove', (e) => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+              const r = card.getBoundingClientRect();
+              card.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
+              card.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
+              ticking = false;
+            });
+          });
+          card.addEventListener('pointerleave', () => {
+            card.style.removeProperty('--mx');
+            card.style.removeProperty('--my');
+          });
+        });
+
+      } else if (!reduceMotion) {
+        // Fallback: progress bar only (no velocity)
+        const progress = document.querySelector('.scroll-progress');
+        if (progress) {
+          const updateProgress = () => {
+            const h = document.documentElement;
+            const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+            progress.style.transform = `scaleX(${scrolled})`;
+          };
+          addEventListener('scroll', updateProgress, { passive: true });
+          updateProgress();
+        }
+
+        // Card hover spotlight (touch/coarse fallback - no spotlight, just hover)
         const spotlightCards = document.querySelectorAll('.skill-card, .project, .repo-card');
         spotlightCards.forEach((card) => {
           card.addEventListener('pointermove', (e) => {
@@ -1075,18 +1115,6 @@
             }
           }, { passive: true });
         }
-      }
-
-      // Scroll progress bar (syncs to actual scroll)
-      const progress = document.querySelector('.scroll-progress');
-      if (progress) {
-        const updateProgress = () => {
-          const h = document.documentElement;
-          const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
-          progress.style.transform = `scaleX(${scrolled})`;
-        };
-        addEventListener('scroll', updateProgress, { passive: true });
-        updateProgress();
       }
     })();
   </script>
