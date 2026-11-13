@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Not Found | Abhishek PR</title>
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    --bg-base: #0f141b; --bg-elevated: #161d27; --bg-raised: #1e2733;
+    --border-subtle: #28323f; --border-strong: #3a4655;
+    --text-primary: #f1f5f9; --text-body: #cbd5e1; --text-muted: #8b98a8;
+    --accent: #38bdf8; --accent-soft: #7dd3fc; --success: #34d399;
+    --font-sans: 'Inter', system-ui, sans-serif; --font-mono: 'Fira Code', monospace;
+    --radius: 12px; --shadow-card: 0 4px 24px rgba(0,0,0,0.35); --ease-out: cubic-bezier(0.2,0.6,0.2,1);
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body { min-height: 100vh; font-family: var(--font-sans); background: var(--bg-base); color: var(--text-primary); display: grid; place-items: center; padding: 2rem; }
+  .container { max-width: 480px; width: 100%; text-align: center; }
+  .code { font-family: var(--font-mono); font-size: clamp(4rem, 18vw, 10rem); font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 1rem; text-shadow: 0 0 40px rgba(56,189,248,0.3); }
+  h1 { font-size: clamp(1.5rem, 5vw, 2.25rem); font-weight: 600; margin-bottom: 0.75rem; }
+  p { color: var(--text-body); font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.85rem; font-weight: 500; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; transition: transform 150ms var(--ease-out), box-shadow 150ms var(--ease-out); }
+  .btn--primary { background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%); color: #021622; border: none; }
+  .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(56,189,248,0.35); }
+  .btn--ghost { background: transparent; color: var(--text-body); border: 1px solid var(--border-strong); }
+  .btn--ghost:hover { color: var(--text-primary); border-color: var(--accent); background: rgba(56,189,248,0.08); }
+  .hint { margin-top: 2rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); }
+  .hint kbd { background: var(--bg-raised); border: 1px solid var(--border-subtle); padding: 0.1rem 0.4rem; border-radius: 4px; }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover { transform: none; } }
+</style>
+</head>
+<body>
+<main class="container">
+<div class="code">404</div>
+<h1>Page Not Found</h1>
+<p>The page you're looking for doesn't exist or has been moved. No worries — let's get you back on track.</p>
+<div class="actions">
+<a class="btn btn--primary" href="/">← Back to Home</a>
+<a class="btn btn--ghost" href="/#projects">View Projects</a>
+</div>
+<p class="hint">Tip: Press <kbd>Esc</kbd> to close any open modals, or <kbd>Cmd</kbd>+<kbd>K</kbd> for search (if available)</p>
+</main>
+<script>
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') window.location.href = '/'; });
+</script>
+</body>
+</html>

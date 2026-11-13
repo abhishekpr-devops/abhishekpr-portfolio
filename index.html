@@ -325,9 +325,12 @@
     .skill-card__title { font-size: 1.15rem; font-weight: 600; color: var(--text-primary); }
     .skill-card__desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem; line-height: 1.6; }
     .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .tags li { font-size: 0.75rem; font-family: var(--font-mono); background: var(--bg-base); border: 1px solid var(--border-subtle); padding: 0.3rem 0.7rem; border-radius: 6px; color: var(--text-muted); white-space: nowrap; transition: border-color 0.2s, color 0.2s, background 0.2s; }
+    .tags li { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; font-family: var(--font-mono); background: var(--bg-base); border: 1px solid var(--border-subtle); padding: 0.3rem 0.7rem; border-radius: 6px; color: var(--text-muted); white-space: nowrap; transition: border-color 0.2s, color 0.2s, background 0.2s; }
+    .tags li img { width: 18px; height: 18px; opacity: 0.85; transition: opacity 0.2s; }
+    .tags li:hover img { opacity: 1; }
     .skill-card:hover .tags li { border-color: var(--border-strong); color: var(--text-body); background: var(--bg-elevated); }
     .tags li:hover { border-color: var(--accent); color: var(--accent); }
+    .tag-endorsed { color: var(--success); font-size: 0.65rem; font-weight: 600; margin-left: 0.15rem; }
 
     /* ===== EXPERIENCE (Timeline) ===== */
     .timeline { position: relative; padding-left: 1.5rem; }
@@ -355,8 +358,16 @@
       transition: opacity 300ms var(--ease-out);
       background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(56, 189, 248, 0.05), transparent 50%);
     }
+    .project::after {
+      content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 300ms var(--ease-out);
+      background: radial-gradient(250px circle at var(--mx, 50%) var(--my, 50%), rgba(56, 189, 248, 0.08), transparent 60%);
+    }
     .project:hover { border-color: var(--border-strong); transform: translateY(-4px); box-shadow: var(--shadow-elevated); }
     .project:hover::before { opacity: 1; }
+    .project.is-hovering::after { opacity: 1; }
+    @media (hover: hover) and (pointer: fine) {
+      .project { --mx: 50%; --my: 50%; }
+    }
     .project__inner { padding: 2.25rem; }
     .project__head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.75rem; flex-wrap: wrap; gap: 1rem; }
     .project__title { font-size: 1.25rem; font-weight: 600; color: var(--text-primary); }
@@ -374,7 +385,7 @@
     .project__links a { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); transition: color 0.2s; }
     .project__links a:hover { color: var(--accent); }
 
-    /* ===== GITHUB ACTIVITY ===== */
+/* ===== GITHUB ACTIVITY ===== */
     .github-section {
       background: linear-gradient(145deg, var(--bg-elevated) 0%, var(--bg-raised) 100%);
       border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: 2.25rem;
@@ -396,8 +407,16 @@
       transition: opacity 300ms var(--ease-out);
       background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(56, 189, 248, 0.05), transparent 50%);
     }
+    .repo-card::after {
+      content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 300ms var(--ease-out);
+      background: radial-gradient(250px circle at var(--mx, 50%) var(--my, 50%), rgba(56, 189, 248, 0.08), transparent 60%);
+    }
     .repo-card:hover { border-color: var(--border-strong); transform: translateY(-4px); box-shadow: var(--shadow-raised); }
     .repo-card:hover::before { opacity: 1; }
+    .repo-card.is-hovering::after { opacity: 1; }
+    @media (hover: hover) and (pointer: fine) {
+      .repo-card { --mx: 50%; --my: 50%; }
+    }
     .repo-card__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.75rem; }
     .repo-card__name { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
     .repo-card__status { font-family: var(--font-mono); font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 999px; font-weight: 600; white-space: nowrap; }
@@ -495,7 +514,7 @@
       .btn::before { display: none; }
       .btn:hover, .btn:active { transform: none !important; }
       .skill-card:hover, .project:hover, .repo-card:hover, .contact-card:hover { transform: none !important; box-shadow: none !important; border-color: var(--border-subtle) !important; }
-      .skill-card::before, .project::before, .repo-card::before { display: none !important; }
+      .skill-card::before, .project::before, .repo-card::before, .project::after, .repo-card::after { display: none !important; }
       .scroll-progress { animation: none !important; }
       .pipeline__dot { animation: none !important; }
       .dot { animation: none !important; }
@@ -618,13 +637,18 @@
         <div class="section__head reveal" data-reveal="up">
           <p class="section__eyebrow"><span>02</span> Technical Skills</p>
           <h2 class="section__title">Tools grouped by domain</h2>
-          <p class="section__lead">Each tag is a piece of infrastructure I've worked with in projects or labs.</p>
+          <p class="section__lead">Each tag is a piece of infrastructure I've worked with in projects or labs. ★ = endorsed.</p>
         </div>
         <div class="skills-grid">
           <article class="skill-card reveal stagger" data-reveal="up" style="--stagger-index: 0;">
-            <div class="skill-card__head"><span class="skill-card__icon">AWS</span><h3 class="skill-card__title">Cloud & AWS</h3></div>
+            <div class="skill-card__head"><span class="skill-card__icon">☁</span><h3 class="skill-card__title">Cloud & AWS</h3></div>
             <p class="skill-card__desc">Core services for compute, storage, networking, and identity.</p>
-            <ul class="tags"><li>EC2</li><li>S3</li><li>VPC</li><li>Security Groups</li><li>Internet Gateway</li><li>Route Tables</li><li>IAM</li><li>Route 53</li><li>RDS</li><li>CloudWatch</li></ul>
+            <ul class="tags">
+              <li><img src="https://cdn.simpleicons.org/amazonwebservices/FF9900" alt="" width="18" height="18" loading="lazy">AWS<span class="tag-endorsed">★ 1</span></li>
+              <li>Cloud Computing</li>
+              <li><img src="https://cdn.simpleicons.org/cloudflare/F38020" alt="" width="18" height="18" loading="lazy">Cloudflare<span class="tag-endorsed">★ 1</span></li>
+              <li>EC2</li><li>S3</li><li>VPC</li><li>Security Groups</li><li>Internet Gateway</li><li>Route Tables</li><li>IAM</li><li>Route 53</li><li>RDS</li><li>CloudWatch</li>
+            </ul>
           </article>
 
           <article class="skill-card reveal stagger" data-reveal="up" style="--stagger-index: 1;">
@@ -636,31 +660,72 @@
           <article class="skill-card reveal stagger" data-reveal="up" style="--stagger-index: 2;">
             <div class="skill-card__head"><span class="skill-card__icon skill-card__icon--success">D</span><h3 class="skill-card__title">Containers & Orchestration</h3></div>
             <p class="skill-card__desc">Docker for containerization, multi-container apps with custom networks.</p>
-            <ul class="tags"><li>Docker</li><li>Docker Compose</li><li>Docker Networking</li><li>Dockerfile Optimization</li><li>Multi-stage Builds</li></ul>
+            <ul class="tags">
+              <li><img src="https://cdn.simpleicons.org/docker/2496ED" alt="" width="18" height="18" loading="lazy">Docker<span class="tag-endorsed">★ 1</span></li>
+              <li>Docker Compose</li><li>Docker Networking</li><li>Dockerfile Optimization</li><li>Multi-stage Builds</li>
+              <li><img src="https://cdn.simpleicons.org/kubernetes/326CE5" alt="" width="18" height="18" loading="lazy">Kubernetes<span class="tag-endorsed">★ 1</span></li>
+            </ul>
           </article>
 
           <article class="skill-card reveal stagger" data-reveal="up" style="--stagger-index: 3;">
             <div class="skill-card__head"><span class="skill-card__icon skill-card__icon--amber">CI</span><h3 class="skill-card__title">CI/CD & Quality</h3></div>
             <p class="skill-card__desc">Automated pipelines with testing, scanning, and deployment stages.</p>
-            <ul class="tags"><li>GitHub Actions</li><li>Docker Hub</li><li>Pytest</li><li>SonarCloud</li><li>SSH Deployment</li></ul>
+            <ul class="tags">
+              <li><img src="https://cdn.simpleicons.org/githubactions/2088FF" alt="" width="18" height="18" loading="lazy">CI/CD<span class="tag-endorsed">★ 1</span></li>
+              <li>GitHub Actions</li><li>Docker Hub</li><li>Pytest</li><li>SonarCloud</li><li>SSH Deployment</li>
+            </ul>
           </article>
 
           <article class="skill-card reveal stagger" data-reveal="up" style="--stagger-index: 4;">
             <div class="skill-card__head"><span class="skill-card__icon">$</span><h3 class="skill-card__title">Scripting & Systems</h3></div>
             <p class="skill-card__desc">Automation scripts and Linux system administration.</p>
-            <ul class="tags"><li>Bash</li><li>Python</li><li>Linux</li><li>Ubuntu</li><li>System Administration</li><li>Troubleshooting</li></ul>
+            <ul class="tags">
+              <li>Bash</li>
+              <li><img src="https://cdn.simpleicons.org/python/3776AB" alt="" width="18" height="18" loading="lazy">Python</li>
+              <li><img src="https://cdn.simpleicons.org/linux/FCC624" alt="" width="18" height="18" loading="lazy">Linux<span class="tag-endorsed">★ 1</span></li>
+              <li>Ubuntu</li><li>System Administration</li><li>Troubleshooting</li>
+              <li>Production Server<span class="tag-endorsed">★ 1</span></li>
+              <li><img src="https://cdn.simpleicons.org/c/A8B9CC" alt="" width="18" height="18" loading="lazy">C</li>
+            </ul>
           </article>
 
           <article class="skill-card reveal stagger" data-reveal="up" style="--stagger-index: 5;">
             <div class="skill-card__head"><span class="skill-card__icon skill-card__icon--success">G</span><h3 class="skill-card__title">Version Control</h3></div>
             <p class="skill-card__desc">Git workflows, branching strategies, and GitHub collaboration.</p>
-            <ul class="tags"><li>Git</li><li>GitHub</li></ul>
+            <ul class="tags">
+              <li><img src="https://cdn.simpleicons.org/git/F05032" alt="" width="18" height="18" loading="lazy">Git</li>
+              <li><img src="https://cdn.simpleicons.org/github/FFFFFF" alt="" width="18" height="18" loading="lazy">GitHub<span class="tag-endorsed">★ 1</span></li>
+            </ul>
           </article>
 
           <article class="skill-card reveal stagger" data-reveal="up" style="--stagger-index: 6;">
             <div class="skill-card__head"><span class="skill-card__icon skill-card__icon--amber">N</span><h3 class="skill-card__title">Web & Networking</h3></div>
             <p class="skill-card__desc">Reverse proxies, DNS management, and secure connectivity.</p>
-            <ul class="tags"><li>Nginx</li><li>HTTP/HTTPS</li><li>SSH</li><li>Cloudflare DNS</li><li>Reverse Proxy</li></ul>
+            <ul class="tags">
+              <li><img src="https://cdn.simpleicons.org/nginx/009639" alt="" width="18" height="18" loading="lazy">Nginx<span class="tag-endorsed">★ 1</span></li>
+              <li>HTTP/HTTPS</li><li>SSH</li>
+              <li><img src="https://cdn.simpleicons.org/cloudflare/F38020" alt="" width="18" height="18" loading="lazy">Cloudflare DNS</li>
+              <li>Reverse Proxy</li>
+              <li><img src="https://cdn.simpleicons.org/cisco/1BA0D7" alt="" width="18" height="18" loading="lazy">Computer Networking</li>
+              <li>CCNA 200-301 Network Fundamentals</li>
+            </ul>
+          </article>
+
+          <article class="skill-card reveal stagger" data-reveal="up" style="--stagger-index: 7;">
+            <div class="skill-card__head"><span class="skill-card__icon skill-card__icon--violet">{}</span><h3 class="skill-card__title">Programming Languages</h3></div>
+            <p class="skill-card__desc">Languages used across projects and tooling.</p>
+            <ul class="tags">
+              <li><img src="https://cdn.simpleicons.org/java/FFFFFF" alt="" width="18" height="18" loading="lazy">Java</li>
+              <li><img src="https://cdn.simpleicons.org/javascript/F7DF1E" alt="" width="18" height="18" loading="lazy">JavaScript</li>
+              <li><img src="https://cdn.simpleicons.org/html5/E34F26" alt="" width="18" height="18" loading="lazy">HTML</li>
+              <li><img src="https://cdn.simpleicons.org/css3/1572B6" alt="" width="18" height="18" loading="lazy">CSS</li>
+            </ul>
+          </article>
+
+          <article class="skill-card reveal stagger" data-reveal="up" style="--stagger-index: 8;">
+            <div class="skill-card__head"><span class="skill-card__icon">★</span><h3 class="skill-card__title">Core Competencies</h3></div>
+            <p class="skill-card__desc">Soft skills and emerging capabilities.</p>
+            <ul class="tags"><li>Prompt Engineering</li><li>Leadership</li><li>Communication</li><li>Problem Solving</li></ul>
           </article>
         </div>
       </div>
@@ -1088,9 +1153,10 @@
           updateProgress();
         }
 
-        // Card hover spotlight (existing, moved here for unified rAF)
+        // Card hover spotlight + shine + tilt (fine pointer, respects reduced-motion)
+        const tiltCards = document.querySelectorAll('.project, .repo-card');
         const spotlightCards = document.querySelectorAll('.skill-card, .project, .repo-card');
-        spotlightCards.forEach((card) => {
+        [...spotlightCards].forEach((card) => {
           let ticking = false;
           card.addEventListener('pointermove', (e) => {
             if (ticking) return;
@@ -1099,12 +1165,30 @@
               const r = card.getBoundingClientRect();
               card.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
               card.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
+              // Tilt for project/repo cards (up to 4deg)
+              if (tiltCards.includes(card)) {
+                const centerX = r.left + r.width / 2;
+                const centerY = r.top + r.height / 2;
+                const dx = e.clientX - centerX;
+                const dy = e.clientY - centerY;
+                const rotateY = (dx / (r.width / 2)) * 4;
+                const rotateX = -(dy / (r.height / 2)) * 4;
+                card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+              }
               ticking = false;
             });
+          });
+          card.addEventListener('pointerenter', () => {
+            if (tiltCards.includes(card)) card.classList.add('is-hovering');
           });
           card.addEventListener('pointerleave', () => {
             card.style.removeProperty('--mx');
             card.style.removeProperty('--my');
+            if (tiltCards.includes(card)) {
+              card.classList.remove('is-hovering');
+              card.style.transition = 'transform 300ms var(--ease-out)';
+              card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+            }
           });
         });
 
@@ -1121,7 +1205,7 @@
           updateProgress();
         }
 
-        // Card hover spotlight (touch/coarse fallback - no spotlight, just hover)
+        // Card hover spotlight + shine (touch/coarse fallback - no tilt)
         const spotlightCards = document.querySelectorAll('.skill-card, .project, .repo-card');
         spotlightCards.forEach((card) => {
           card.addEventListener('pointermove', (e) => {
@@ -1129,9 +1213,13 @@
             card.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`);
             card.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`);
           });
+          card.addEventListener('pointerenter', () => {
+            if (card.matches('.project, .repo-card')) card.classList.add('is-hovering');
+          });
           card.addEventListener('pointerleave', () => {
             card.style.removeProperty('--mx');
             card.style.removeProperty('--my');
+            card.classList.remove('is-hovering');
           });
         });
       }
